@@ -108,60 +108,60 @@ elseif nS == 2
     precoder_index = 1:1:16;
 end
 
-optimal_selection=zeros(1,MAX_frame_NUM);
-proposed_selection=zeros(1,MAX_frame_NUM);
-LR_selection=zeros(1,MAX_frame_NUM);
-
-i = 0;
-
-for EbNo_idx=EbNo % needs to modify
-    i = i + 1;
-    bit_error=0;
-    rng('default');
-    rng(seed);
-    %noise variance calculation
-    n_var=10^(-EbNo(i)/10)/k;
-    tic
-    for frame_idx=1:MAX_frame_NUM
-        fprintf('[%d] \n', frame_idx);
-        %random frame generation
-        bits=randi([0 1],1,frame_size);
-        
-        %QAM mapping
-        x=QAM_mapper(bits,k);
-        x=transpose(x);%row->column
-
-        %wireless transmission
-        %Rayleigh fading channel
-        H=1/sqrt(nS)*sqrt(1/2)*(randn(nR, nR)+j*randn(nR, nR));
-        
-        % parfor 로 수행시, precoder 당, 약 500초(8.3분) 정도 수행
-        
-        % GPU 로 수행시, precoder 당, 약 128초(2.13분) 정도 수행
-        [opt_F, opt_idx] = optimal_precoder_select_with_GPUs(H, F4, nS, possible_x, precoder_index);
-        [proposed_F, proposed_idx] = precoder_select_ML_kim_ver2(H, nS);
-        [LR_F, LR_idx] = QRD_based_BT_E_Method(H, nS, nS-1, 0.99);
-        
-        optimal_selection(frame_idx) = find(precoder_index==opt_idx);
-        proposed_selection(frame_idx) = find(precoder_index==proposed_idx);
-        LR_selection(frame_idx) = find(precoder_index==LR_idx);
-        % [proposed_F, proposed_idx] = precoder_select_ML_ver6_complex_ver1(H, nS);
-        % [proposed_F, proposed_idx] = precoder_select_ML_ver4(H, nS);
-        fprintf(' Optimal : %d, Proposed : %d\n', opt_idx, proposed_idx);
-        fprintf(' Proposed : %d, LR : %d\n', proposed_idx, LR_idx);
-        
-        a = clock;
-
-        save(filename,'optimal_selection','proposed_selection','LR_selection');
-
-
-    end
-    toc
-    
-end
+% optimal_selection=zeros(1,MAX_frame_NUM);
+% proposed_selection=zeros(1,MAX_frame_NUM);
+% LR_selection=zeros(1,MAX_frame_NUM);
+% 
+% i = 0;
+% 
+% for EbNo_idx=EbNo % needs to modify
+%     i = i + 1;
+%     bit_error=0;
+%     rng('default');
+%     rng(seed);
+%     %noise variance calculation
+%     n_var=10^(-EbNo(i)/10)/k;
+%     tic
+%     for frame_idx=1:MAX_frame_NUM
+%         fprintf('[%d] \n', frame_idx);
+%         %random frame generation
+%         bits=randi([0 1],1,frame_size);
+%         
+%         %QAM mapping
+%         x=QAM_mapper(bits,k);
+%         x=transpose(x);%row->column
+% 
+%         %wireless transmission
+%         %Rayleigh fading channel
+%         H=1/sqrt(nS)*sqrt(1/2)*(randn(nR, nR)+j*randn(nR, nR));
+%         
+%         % parfor 로 수행시, precoder 당, 약 500초(8.3분) 정도 수행
+%         
+%         % GPU 로 수행시, precoder 당, 약 128초(2.13분) 정도 수행
+%         [opt_F, opt_idx] = optimal_precoder_select_with_GPUs(H, F4, nS, possible_x, precoder_index);
+%         [proposed_F, proposed_idx] = precoder_select_ML_kim_ver2(H, nS);
+%         [LR_F, LR_idx] = QRD_based_BT_E_Method(H, nS, nS-1, 0.99);
+%         
+%         optimal_selection(frame_idx) = find(precoder_index==opt_idx);
+%         proposed_selection(frame_idx) = find(precoder_index==proposed_idx);
+%         LR_selection(frame_idx) = find(precoder_index==LR_idx);
+%         % [proposed_F, proposed_idx] = precoder_select_ML_ver6_complex_ver1(H, nS);
+%         % [proposed_F, proposed_idx] = precoder_select_ML_ver4(H, nS);
+%         fprintf(' Optimal : %d, Proposed : %d\n', opt_idx, proposed_idx);
+%         fprintf(' Proposed : %d, LR : %d\n', proposed_idx, LR_idx);
+%         
+%         a = clock;
+% 
+%         save(filename,'optimal_selection','proposed_selection','LR_selection');
+% 
+% 
+%     end
+%     toc
+%     
+% end
 
 plotting_selections(optimal_selection(500:600), proposed_selection(500:600), LR_selection(500:600));
-plotting_accuracy(optimal_selection(200:300), proposed_selection(200:300), LR_selection(200:300));
+% plotting_accuracy(optimal_selection(200:300), proposed_selection(200:300), LR_selection(200:300));
 
 function plotting_accuracy(optimal_selection, proposed_selection, LR_selection)
 
@@ -192,7 +192,10 @@ function plotting_selections(optimal, proposed, lr)
     xlabel('Frame index');
 
     xlim([0 trials + 1])
+    yticks('manual')
     ylim([0 6])
+    yticklabels({'', '1', '2', '3', '4', '5', ''})
+    
 
     xbounds = ylim;
     set(gca,'YTick',xbounds(1):xbounds(2));
@@ -214,7 +217,8 @@ function plotting_selections(optimal, proposed, lr)
 
     xlim([0 trials + 1])
     ylim([0 6])
-
+    yticklabels({'', '1', '2', '3', '4', '5', ''})
+    
     xbounds = ylim;
     set(gca,'YTick',xbounds(1):xbounds(2));
 

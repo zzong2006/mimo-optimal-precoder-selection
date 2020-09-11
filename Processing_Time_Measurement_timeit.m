@@ -292,24 +292,7 @@ tix=get(gca,'xtick')';
 set(gca,'xticklabel',num2str(tix,'%.4f'));
 
 xlim([0 2.5*10^(-3)]);
-ylabel('Precoder Selection Technique');
 xlabel('Processing time [sec]');
 
-% hold on
-% er = errorbar(sorted_precoder_selection, sorted_val, sorted_std);
-% er.Color=[0 0 0];
-% er.LineStyle = 'non';
-% hold off
-% title('Precoder Selection Processing Time');
-
-% x_range = 1:1:1000; window_size = 1;
-% semilogy(x_range,smoothdata(prs_time_SML,'gaussian',window_size), '-','LineWidth',2);    hold on;
-% semilogy(x_range,smoothdata(prs_time_ML,'gaussian',window_size), '-','LineWidth',2);  hold on;
-% semilogy(x_range,smoothdata(prs_time_QRD,'gaussian',window_size), '-','LineWidth',2);  hold on;
-% semilogy(x_range,smoothdata(prs_time_QRD_BTP,'gaussian',window_size), '-','LineWidth',2);  hold on;
-% semilogy(x_range,smoothdata(prs_time_QRD_BTC,'gaussian',window_size), '-','LineWidth',2);  hold on;
-% semilogy(x_range,smoothdata(prs_time_QRD_BTE,'gaussian',window_size), '-','LineWidth',2);  hold on;
-
-% legend('SML precoder','ML precoder','QRD precoder','QRD-BTP precoder','QRD-BTC precoder','QRD-BTE precoder');
 
 saveas(gcf,'MIMO_test_fig_bar');
