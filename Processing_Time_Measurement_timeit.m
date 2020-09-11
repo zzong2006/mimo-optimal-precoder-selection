@@ -274,7 +274,7 @@ end
 
 disp('All over');
 
-c = categorical({'Proposed', 'Previous',  'SVD-based', 'QRD-based','LR-based' ,'Limited Search Space'});
+c = categorical({'Proposed', 'Proposed(Intermediate)',  'SVD-based', 'QRD-based','LR-based' ,'Limited Search Space'});
 prices = [mean(prs_time_ML), mean(prs_time_previous), mean(prs_time_SVD), mean(prs_time_QRD), ...
     mean(prs_time_QRD_BTE), mean(prs_time_SML)];
 std_prices = [std(prs_time_ML), std(prs_time_previous), std(prs_time_SVD), std(prs_time_QRD), ...
@@ -288,6 +288,8 @@ figure();
 
 barh(sorted_val);
 set(gca, 'YTickLabel', sorted_precoder_selection);
+tix=get(gca,'xtick')';
+set(gca,'xticklabel',num2str(tix,'%.4f'));
 
 xlim([0 2.5*10^(-3)]);
 ylabel('Precoder Selection Technique');

@@ -1,6 +1,5 @@
 % Optimal 과 Proposed가 서로 같은 Precoder를 선택하는지 테스트해보는 실험
 % nT = nR = nS = 4에서 진행하도록 설계
-clearvars;
 j = sqrt(-1);
 
 comparison = false;
@@ -159,11 +158,10 @@ for EbNo_idx=EbNo % needs to modify
     end
     toc
     
-    % optimal_selection = proposed_selection;
 end
 
-plotting_selections(optimal_selection, proposed_selection, LR_selection);
-plotting_accuracy(optimal_selection, proposed_selection, LR_selection);
+plotting_selections(optimal_selection(500:600), proposed_selection(500:600), LR_selection(500:600));
+plotting_accuracy(optimal_selection(200:300), proposed_selection(200:300), LR_selection(200:300));
 
 function plotting_accuracy(optimal_selection, proposed_selection, LR_selection)
 
@@ -183,7 +181,7 @@ function plotting_selections(optimal, proposed, lr)
     y = 1:trials;
     
     figure;
-    plot(y,optimal,'ko', 'MarkerSize', 4, 'MarkerFaceColor', 'r');
+    plot(y,optimal,'ko', 'MarkerSize', 4, 'MarkerFaceColor', 'k');
     hold on;
     grid on;
     grid minor;
@@ -191,7 +189,7 @@ function plotting_selections(optimal, proposed, lr)
     hold on;
 
     ylabel('Selected precoder index');
-    xlabel('Number of trial');
+    xlabel('Frame index');
 
     xlim([0 trials + 1])
     ylim([0 6])
@@ -204,7 +202,7 @@ function plotting_selections(optimal, proposed, lr)
 
     figure;
 
-    plot(y,optimal,'ko', 'MarkerSize', 4, 'MarkerFaceColor', 'r');
+    plot(y,optimal,'ko', 'MarkerSize', 4, 'MarkerFaceColor', 'k');
     hold on;
     grid on;
     grid minor;

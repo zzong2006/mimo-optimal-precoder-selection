@@ -168,7 +168,6 @@ for precoder_idx=precoder_index
     %min_radius = min(vecnorm(RR)); 
     
     if min_radius<=max_of_min_radius
-        disp('min_radius : skip');
         continue; 
     end
     
@@ -236,7 +235,7 @@ for precoder_idx=precoder_index
         end
     end     % While
     % disp(min_radius);
-    fprintf('%d) %20.30f\n',precoder_idx, min_radius)
+    %fprintf('%d) %20.30f\n',precoder_idx, min_radius)
     if min_radius > max_of_min_radius 
         max_of_min_radius = min_radius;
        opt_precoder_idx = precoder_idx;
