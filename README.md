@@ -12,6 +12,6 @@ This is the MATLAB code for simulation of [the IEEE paper](https://ieeexplore.ie
 
 ## License
 
-This software is licensed under the [MIT License](), quoted below.
+This software is licensed under the [MIT License](LICENSE), quoted below.
 
 Copyright 2020 Digital Communications Laboratory of Yonsei University. [https://it.yonsei.ac.kr/dclab/](https://it.yonsei.ac.kr/dclab/)
